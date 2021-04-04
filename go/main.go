@@ -13,6 +13,10 @@ func main() {
 	}
 
 	for _, f := range files {
-		fmt.Println(f.Name())
+		if f.IsDir() {
+			fmt.Println("folder", f.Name())
+			continue
+		}
+		fmt.Println("file", f.Name())
 	}
 }
