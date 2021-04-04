@@ -2,21 +2,25 @@ package main
 
 import (
 	"fmt"
-	"io/ioutil"
 	"log"
+	"os"
+	"path/filepath"
 )
 
 func main() {
-	files, err := ioutil.ReadDir("../target")
-	if err != nil {
-		log.Fatal(err)
-	}
+	listDirectory("../target")
+}
 
-	for _, f := range files {
-		if f.IsDir() {
-			fmt.Println("folder", f.Name())
-			continue
-		}
-		fmt.Println("file", f.Name())
+func listDirectory(target string) {
+	err := filepath.Walk(target,
+		func(path string, info os.FileInfo, err error) error {
+			if err != nil {
+				return err
+			}
+			fmt.Println(path, info.Size())
+			return nil
+		})
+	if err != nil {
+		log.Println(err)
 	}
 }
