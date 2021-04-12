@@ -3,6 +3,7 @@ package main
 import (
 	"bufio"
 	"fmt"
+	"io/ioutil"
 	"log"
 	"os"
 	"path/filepath"
@@ -10,23 +11,21 @@ import (
 )
 
 func main() {
-	listDirectory("../target")
+	fmt.Println(os.Args[1])
+	listDirectory(os.Args[1])
 }
 
 func listDirectory(target string) {
 	err := filepath.Walk(target,
 		func(path string, info os.FileInfo, err error) error {
-			if err != nil {
-				return err
-			}
+			check(err)
+
 			if !info.IsDir() {
 				scanFile(path)
 			}
 			return nil
 		})
-	if err != nil {
-		log.Println(err)
-	}
+	check(err)
 }
 
 func scanFile(filePath string) {
@@ -41,16 +40,35 @@ func scanFile(filePath string) {
 	for scanner.Scan() {
 		_, token, err := bufio.ScanLines([]byte(scanner.Text()), true)
 
+		check(err)
+
 		s := string(token)
 
-		if err == nil && strings.Contains(s, "debugger") {
+		for _, word := range getWords() {
+			if strings.Contains(s, word) {
 
-			fmt.Printf("%v - L%v : %v", filePath, line, s)
+				fmt.Printf("%v - L%v : %v \n", filePath, line, s)
+			}
+
 		}
+
 		line++
 	}
 
 	if err := scanner.Err(); err != nil {
 		log.Fatal(err)
 	}
+}
+
+func check(err error) {
+	if err != nil {
+		panic(err)
+	}
+}
+
+func getWords() []string {
+	data, err := ioutil.ReadFile("../words.txt")
+	check(err)
+	return strings.Split(string(data), "\n")
+
 }
