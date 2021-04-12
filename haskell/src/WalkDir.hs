@@ -24,6 +24,6 @@ scanFile :: FilePath -> IO ()
 scanFile f = do
   file <- readFile f
   let parsedLines = zip [1 ..] (lines file)
-  targetedWords <- readFile "../../words.txt"
+  targetedWords <- readFile "../words.txt"
   let filteredLines = [l | l <- parsedLines, any (\w -> w `isInfixOf` snd l) (lines targetedWords)]
   print ((0, f) : filteredLines)
