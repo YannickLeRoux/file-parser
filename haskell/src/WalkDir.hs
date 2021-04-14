@@ -15,9 +15,10 @@ listFilesDirFiltered :: String -> IO ()
 listFilesDirFiltered path = do
   _ :/ tree <- readDirectoryWith return path
   traverse_ scanFile $ filterDir myPred tree
+  putStrLn "Done."
   where
     myPred (Dir ('.' : _) _) = False
-    myPred (File n _) = takeExtension n == ".txt"
+    myPred (File n _) = takeExtension n `elem` [".txt", ".js", ".jsx", ".ts", ".tsx"]
     myPred _ = True
 
 scanFile :: FilePath -> IO ()

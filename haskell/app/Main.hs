@@ -6,4 +6,4 @@ import WalkDir
 main :: IO ()
 main = do
   args <- getArgs
-  putStrLn (head args)
+  listFilesDirFiltered $ head args

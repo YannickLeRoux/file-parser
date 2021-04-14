@@ -29,7 +29,7 @@ library:
   source-dirs: src
 
 executables:
-  haskell-exe:
+  file-parser:
     main: Main.hs
     source-dirs: app
     ghc-options:
@@ -38,6 +38,9 @@ executables:
       - -with-rtsopts=-N
     dependencies:
       - haskell
+      - directory-tree
+      - filepath
+      - directory
 
 tests:
   haskell-test:

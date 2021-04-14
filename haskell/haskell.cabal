@@ -4,7 +4,7 @@ cabal-version: 1.12
 --
 -- see: https://github.com/sol/hpack
 --
--- hash: f418223c5161971c1f35ca84b6b56ca20659cb636c9f5e91871b676ca39e2daa
+-- hash: 3978427965789d539e90cb42315dd78f58fb32385fe05bf7d47d12f3a0f35ada
 
 name:           haskell
 version:        0.1.0.0
@@ -39,7 +39,7 @@ library
     , filepath
   default-language: Haskell2010
 
-executable haskell-exe
+executable file-parser
   main-is: Main.hs
   other-modules:
       Paths_haskell
